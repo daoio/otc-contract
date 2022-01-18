@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Escrow Maker</title>
+        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+        <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+        <link rel="stylesheet" type="text/css" href="skeleton.css" media="screen" />
+        <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript">
+        </script>
+        <script language="javascript" type="text/javascript" src="./efabi.js"></script>
+        <h1>Escrow Maker</h1>
+        <input  id="token" type="text" placeholder="token">
+        <input  id="eth-sender" type="text" placeholder="ETHsender">
+        <input  id="token-sender" type="text" placeholder="TokenSender">
+        <p>
+          <button id="btn-create" class="cta">
+            <span>Create Escrow Contract</span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+              <path d="M1,5 L11,5"></path>
+              <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+          </button>
+        </p>
+        <h2 id="address"></h2>
+      </head>
+      <body>
+          </body>
+        <script>
+            const factory = "contractAddress";
+            const serverUrl = "your-server-url";
+            const appId = "your-app-id";
+            Moralis.start({ serverUrl, appId });
+
+            async function createEscrowContract() {
+                const web3 = await Moralis.enableWeb3();
+
+                const options = {
+                    contractAddress: factory,
+                    functionName: "createEscrow",
+                    abi: efabi,
+                    params: {
+                    _tokenAddr: String(document.getElementById("token").value),
+                    _userETH: String(document.getElementById("eth-sender").value),
+                    _userERC20: String(document.getElementById("token-sender").value),
+                    },
+                };
+                
+                const create = await Moralis.executeFunction(options);
+            }
+
+          document.getElementById("btn-create").onclick = createEscrowContract;
+        </script>
+      </body>
+    </html>
