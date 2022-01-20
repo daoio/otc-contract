@@ -66,7 +66,9 @@ contract Escrow {
     }
 
     function depositERC20(uint256 _amount) external onlyB {
-        token.transferFrom(msg.sender, address(this), _amount);
+        address payable depositor = msg.sender;
+        // UserB firstly should directly use approve(), to allow contract transfer funds from him
+        token.transferFrom(depositor, address(this), _amount);
         signatures[msg.sender] = 1;
         emit Deposit(msg.sender, _amount);
     }
