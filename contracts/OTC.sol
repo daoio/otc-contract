@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /** 
-*   @title EscrowP2P
-*   @notice smart-cotnract for P2P ERC20->ETH escrow deals
+*   @title OTC
+*   @notice smart-cotnract for ERC20->ETH OTC deals
 *
 *   ///////////////////////////////////////////////////////////////////////////////
 *   ///////////////////////     CONDITIONS OF THE DEAL     ///////////////////////
@@ -24,7 +24,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 *   satisfied with everything, they sign a contract. When the contract is signed by both, 
 *   the funds can be withdrawn by them
 */
-contract EscrowP2P is ReentrancyGuard {
+contract OTC is ReentrancyGuard {
     ///@notice ERC20 asset for exchange
     IERC20 private asset;
 
