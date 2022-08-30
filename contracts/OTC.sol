@@ -94,7 +94,7 @@ contract OTC is ReentrancyGuard {
             parties[party].deposited == false &&
             parties[party].signed == false &&
             parties[party].rescinded == false,
-            "EscrowP2P{depositReview}: Deposit condtions hasn't been met"
+            "OTC{depositReview}: Deposit condtions hasn't been met"
         );
         ///@notice in case deposit time expired
         if (periods.depositTime < block.timestamp) {
@@ -109,7 +109,7 @@ contract OTC is ReentrancyGuard {
             parties[msg.sender].deposited == true &&
             parties[msg.sender].signed == false &&
             parties[msg.sender].rescinded == false,
-            "EscrowP2P{signingReview}: Signing condtions hasn't been met"
+            "OTC{signingReview}: Signing condtions hasn't been met"
         );
         ///@notice in case signing time expired
         if (periods.signingTime < block.timestamp) {
@@ -124,7 +124,7 @@ contract OTC is ReentrancyGuard {
             parties[msg.sender].deposited == true &&
             parties[msg.sender].signed == false &&
             parties[msg.sender].rescinded == false,
-            "EscrowP2P{rescindReview}: Rescind condtions hasn't been met" 
+            "OTC{rescindReview}: Rescind condtions hasn't been met" 
         );
         _;
     }
@@ -135,7 +135,7 @@ contract OTC is ReentrancyGuard {
             parties[msg.sender].deposited == true &&
             parties[msg.sender].signed == true &&
             parties[msg.sender].rescinded == false,
-            "EscrowP2P{rescindReview}: Withdraw condtions hasn't been met" 
+            "OTC{rescindReview}: Withdraw condtions hasn't been met" 
         );
         _;
     }
@@ -163,7 +163,7 @@ contract OTC is ReentrancyGuard {
     ///@notice only `partyA` can deposit ETH
     function depositEth() external payable depositReview(partyA.addr) nonReentrant {
         ///@notice no need for deals with 0 amount pre-agreed
-        require(msg.value > 0, "Escrow{depositEth}: eth amount should be >0");
+        require(msg.value > 0, "OTC{depositEth}: eth amount should be >0");
         _updatePartyState(msg.sender, true, false, false);
 
         emit Deposit(msg.sender, msg.value);
@@ -171,7 +171,7 @@ contract OTC is ReentrancyGuard {
 
     ///@notice only `partyB` can deposit ERC20
     function depositAsset(uint256 amount) external depositReview(partyB.addr) nonReentrant {
-        require(amount > 0, "Escrow{depositAsset}: `asset` amount should be >0");
+        require(amount > 0, "OTC{depositAsset}: `asset` amount should be >0");
         ///@notice approve `amount` first
         asset.transferFrom(msg.sender, address(this), amount);
         _updatePartyState(msg.sender, true, false, false);
