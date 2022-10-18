@@ -90,10 +90,10 @@ contract OTC is ReentrancyGuard {
     */
     modifier depositReview(address party) {
         require(
-            parties[party].addr == party &&
-            parties[party].deposited == false &&
-            parties[party].signed == false &&
-            parties[party].rescinded == false,
+            parties[msg.sender].addr == party &&
+            parties[msg.sender].deposited == false &&
+            parties[msg.sender].signed == false &&
+            parties[msg.sender].rescinded == false,
             "OTC{depositReview}: Deposit condtions hasn't been met"
         );
         ///@notice in case deposit time expired
